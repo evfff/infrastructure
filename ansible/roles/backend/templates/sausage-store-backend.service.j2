@@ -1,0 +1,16 @@
+# sausage-store-backend.service ansible
+[Unit]
+Description=Sausage backend
+
+[Service]
+Type=simple
+User={{ backend_service_user }}
+ExecStart=/usr/bin/java -jar -Dmyserver.basePath='/home/jarservice/' -Dmyserver.bindAddr='127.0.0.1'  -Dmyserver.hostName='Sausage-store' /home/jarservice/sausage-store.jar
+ExecStop=/bin/kill -15 $MAINPID
+Restart=always
+Environment="LOG_PATH=/opt/log/"
+Environment="REPORT_PATH=/opt/log/reports/"
+SuccessExitStatus=143
+StandardOutput=append:/opt/log/sausage-store-backend.log
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+# sausage-store-frontend.service
+[Unit]
+Description=Sausage frontend
+
+[Service]
+Type=simple
+User={{ frontend_service_user }}
+ExecStart=/usr/bin/http-server /var/www-data/dist/frontend -p 8090 --proxy http://localhost:8080
+ExecStop=/bin/kill -15 $MAINPID
+Restart=on-failure
+StandardOutput=append:/opt/log/out-front.log
+StandardError=append:/opt/log/error-front.log
+[Install]
+WantedBy=multi-user.target

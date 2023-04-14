@@ -1,0 +1,8 @@
+---
+# handlers file for frontend
+- name: Restart systemd front  
+  become: true
+  systemd:
+    name: sausage-store-frontend
+    state: restarted
+    daemon_reload: yes

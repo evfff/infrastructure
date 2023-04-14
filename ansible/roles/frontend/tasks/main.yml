@@ -1,0 +1,80 @@
+---
+# tasks file for frontend
+- name: Update APT package manager repositories cache
+  become: true
+  apt:
+    update_cache: yes
+#- name: node js download script
+#   ansible.builtin.command:
+#    cmd: "curl -sL https://deb.nodesource.com/setup_18.x -o nodesource18_setup.sh"
+- name:  node js download script get URL
+  ansible.builtin.get_url:
+    url: https://deb.nodesource.com/setup_18.x
+    dest: /home/student/nodesource18_setup.sh
+- name: chmod script
+  file:
+    path: nodesource18_setup.sh
+    mode: '0777'
+- name: node js start  script
+  become: true
+  ansible.builtin.command:
+    cmd: "sudo bash nodesource18_setup.sh"
+- name: Install Node JS
+  become: yes
+  apt:
+    name: "nodejs"
+    state: present
+- name: Install "http-server" node.js package globally.
+  become: true
+  community.general.npm:
+    name: http-server
+    global: true
+- name: Добавим сервисного пользователя
+  become: true
+  user:
+    name: "www-data"
+    create_home: no
+    shell: /sbin/nologin
+- name: сreate /var/www-data  directory
+  become: true
+  file:
+    path=/var/www-data
+    mode=0755
+    owner=www-data
+    group=www-data
+    state=directory
+- name: сreate /var/www-data/dist  directory
+  become: true
+  file:
+    path=/var/www-data/dist
+    mode=0755
+    owner=www-data
+    group=www-data
+    state=directory
+- name: Download artifacts front  using get_url
+  become: yes
+  ansible.builtin.get_url:
+    url: "{{ nexus_front_url }}{{ frontend_version }}/sausage-store-{{ frontend_version }}.tar.gz"
+    dest: /var/www-data
+    mode: 0755
+    group: www-data
+    owner: www-data
+    username: "{{ nexus_user }}"
+    password: "{{ nexus_pass }}"
+
+- name: Unarchive a file that needs to be downloaded (added in 2.0)
+  become: true
+  ansible.builtin.unarchive:
+    src: /var/www-data/sausage-store-{{ frontend_version }}.tar.gz
+    dest: /var/www-data/dist
+    remote_src: yes
+    mode: 0755
+    group: www-data
+    owner: www-data
+- name: Шаблон фронт сервиса развернуть
+  become: true
+  template:
+    src: sausage-store-frontend.service.j2
+    dest: /etc/systemd/system/sausage-store-frontend.service
+  notify:
+    - Restart systemd front

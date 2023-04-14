@@ -1,0 +1,5 @@
+---
+# defaults file for frontend
+frontend_service_user: www-data
+frontend_version: 1.0.275117
+nexus_front_url: https://nexus.praktikum-services.ru/repository/sausage-store-frantsuzovev-frontend/sausage-store-front/sausage-store/

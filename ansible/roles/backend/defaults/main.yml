@@ -1,0 +1,7 @@
+---
+# defaults file for backend
+backend_service_user: jarservice
+backend_maven_version: 1.0.259758
+backend_report_directory: /opt/sausage-store/reports
+backend_lib_directory: /opt/sausage-store/lib/
+backend_nexus_pero: https://nexus.praktikum-services.ru/repository/sausage-store-frantsuzovev-backend

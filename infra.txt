@@ -1,0 +1,13 @@
+student-vm-40
+Внутренний FQDN fhmfuotc8ohqa5fhuihk.auto.internal
+Внутренний IPv4 10.128.0.14
+Публичный IPv4 51.250.95.151
+
+
+
+
+evgenii-frantsuzov-15-11-backup
+Внутренний FQDN evgenii-frantsuzov-15-11-backup.ru-central1.internal 
+Внутренний IPv4 10.129.0.5
+Публичный IPv4 158.160.19.9
+Подсеть default-ru-central1-b
