@@ -1,5 +1,5 @@
 # Infrastructure
 
 
-файл .terraformrc нужно положить в папку юзера, например /home/student/
+файл .terraformrc нужно положить в папку юзера /home/user/
 ========
